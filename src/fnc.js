@@ -20,7 +20,21 @@ var clone = function(o){
   else {
     return o;
   }
-}
+};
+
+var withArrayOrNull = function(f, a){
+  if(arguments.length === 1){
+    return function(a2){
+      return withArrayOrNull(f, a2);
+    }
+  }
+  else {
+    if(isArray(a))
+      return f(a);
+    else
+      return null;
+  }
+};
 
 var each = function(f, o){
   if(isArray(o)){
@@ -74,43 +88,23 @@ var merge = function(o){
   }
 };
 
-var head = function(a){
-  if(isArray(a)) {
-    var h = a[0];
-    return typeof h === "undefined" ? null : h;
-  }
-  else {
-    return null;
-  }
-};
+var head = withArrayOrNull(function(a){
+  var h = a[0];
+  return typeof h === "undefined" ? null : h;
+});
 
-var tail = function(a){
-  if(isArray(a)) {
-    return slice(a, 1);
-  }
-  else {
-    return null;
-  }
-};
+var tail = withArrayOrNull(function(a){
+  return slice(a, 1);
+});
 
-var initial = function(a){
-  if(isArray(a)) {
-    return slice(a, 0, a.length - 1);
-  }
-  else {
-    return null;
-  }
-};
+var initial = withArrayOrNull(function(a){
+  return slice(a, 0, a.length - 1);
+});
 
-var last = function(a){
-  if(isArray(a)) {
-    var l = a[a.length - 1];
-    return typeof l === "undefined" ? null : l;
-  }
-  else {
-    return null;
-  }
-};
+var last = withArrayOrNull(function(a){
+  var l = a[a.length - 1];
+  return typeof l === "undefined" ? null : l;
+});
 
 module.exports = {
   each: each,
