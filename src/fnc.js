@@ -4,8 +4,25 @@ var slice = function(a){
 
 var isArray = Array.isArray;
 
+var isString = function(s){
+  return (/String/).test(Object.prototype.toString.call(s));
+};
+
 var isObject = function(o){
   return o && !isArray(o) && typeof o === "object";
+};
+
+var length = function(o){
+  if(isArray(o) || isString(o))
+    return o.length;
+  else if(isObject(o))
+    return Object.keys(o).length;
+  else
+    return null;
+};
+
+var isEmpty = function(o){
+  return length(o) === 0;
 };
 
 var clone = function(o){
@@ -146,7 +163,7 @@ var remove = function(fn, a){
 };
 
 var some = function(fn, a){
-  if(a.length == 0) return false;
+  if(isEmpty(a)) return false;
   for(var i = 0; i < a.length; i++)
     if(fn(a[i]))
       return true;
@@ -154,7 +171,7 @@ var some = function(fn, a){
 };
 
 var every = function(fn, a){
-  if(a.length == 0) return false;
+  if(isEmpty(a)) return false;
   for(var i = 0; i < a.length; i++)
     if(!fn(a[i]))
       return false;
