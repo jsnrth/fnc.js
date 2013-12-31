@@ -92,3 +92,40 @@ suite("reduce", function(){
     assert.deepEqual({onex2: 2, twox2: 4, threex2: 6}, result);
   });
 });
+
+suite("merge", function(){
+  test("merges two object", function(){
+    var start = {foo: "bar"};
+    var merged = F.merge(start, {baz: "bat"});
+    assert.deepEqual(start, {foo: "bar"});
+    assert.deepEqual(merged, {foo: "bar", baz: "bat"});
+  });
+
+  test("merges multiple objects", function(){
+    var start = {foo: "bar"};
+    var merged = F.merge(start, {baz: "bat"}, {qux: "quux"});
+    assert.deepEqual(start, {foo: "bar"});
+    assert.deepEqual(merged, {foo: "bar", baz: "bat", qux: "quux"});
+  });
+
+  test("ignores non-objects", function(){
+    var start = {foo: "bar"};
+    var merged = F.merge(start, 1234, "foobar", null, undefined, ["blah"]);
+    assert.deepEqual(start, merged);
+  });
+
+  test("handles bad starting values", function(){
+    var thing = {foo: "bar"};
+    assert.deepEqual(F.merge("foobar", thing), {});
+    assert.deepEqual(F.merge(12345, thing), {});
+    assert.deepEqual(F.merge([1, 2, 3], thing), {});
+    assert.deepEqual(F.merge(true, thing), {});
+    assert.deepEqual(F.merge(false, thing), {});
+  });
+
+  test("null and undefined starting values are treated like empty objects", function(){
+    var thing = {foo: "bar"};
+    assert.deepEqual(F.merge(null, thing), {foo: "bar"});
+    assert.deepEqual(F.merge(undefined, thing), {foo: "bar"});
+  });
+});

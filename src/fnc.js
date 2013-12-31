@@ -52,8 +52,27 @@ var reduce = function(fn, init, o){
   return accum;
 };
 
+var merge = function(o){
+  if(o === null || o === undefined) o = {};
+  if(isObject(o)){
+    var merges = Array.prototype.slice.call(arguments, 1);
+    return reduce(function(accum, m){
+      if(isObject(m)){
+        each(function(v, k){
+          accum[k] = v;
+        }, m);
+      }
+      return accum;
+    }, o, merges);
+  }
+  else {
+    return {};
+  }
+};
+
 module.exports = {
   each: each,
   map: map,
-  reduce: reduce
+  reduce: reduce,
+  merge: merge
 };
