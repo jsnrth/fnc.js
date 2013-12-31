@@ -22,21 +22,28 @@ var clone = function(o){
   }
 };
 
-var withArrayOrNull = function(f, a){
-  if(arguments.length === 1){
-    return function(a2){
-      return withArrayOrNull(f, a2);
+var curry = function(f){
+  var initial = slice(arguments, 1);
+  return function(){
+    var args = initial.concat(slice(arguments));
+    if(args.length < f.length){
+      args.unshift(f);
+      return curry.apply(null, args);
     }
-  }
-  else {
-    if(isArray(a))
-      return f(a);
-    else
-      return null;
+    else {
+      return f.apply(null, args)
+    }
   }
 };
 
-var each = function(f, o){
+var withArrayOrNull = curry(function(f, a){
+  if(isArray(a))
+    return f(a);
+  else
+    return null;
+});
+
+var each = curry(function(f, o){
   if(isArray(o)){
     o.forEach(f);
   }
@@ -44,14 +51,9 @@ var each = function(f, o){
     var fn = function(k){ f.apply(null, [o[k], k]); };
     return each(fn, Object.keys(o));
   }
-  else if(typeof o === "undefined"){
-    return function(o2){
-      return each(f, o2);
-    }
-  }
-};
+});
 
-var map = function(f, o){
+var map = curry(function(f, o){
   if(isArray(o) || isObject(o)){
     var a = [];
     each(function(e){ a.push(f(e)); }, o);
@@ -60,15 +62,15 @@ var map = function(f, o){
   else {
     return null;
   }
-};
+});
 
-var reduce = function(fn, init, o){
+var reduce = curry(function(fn, init, o){
   var accum = clone(init);
   each(function(v, k){
     accum = fn(accum, v, k);
   }, o);
   return accum;
-};
+});
 
 var merge = function(o){
   if(o === null || o === undefined) o = {};
@@ -107,6 +109,7 @@ var last = withArrayOrNull(function(a){
 });
 
 module.exports = {
+  curry: curry,
   each: each,
   map: map,
   reduce: reduce,

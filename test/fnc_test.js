@@ -1,6 +1,23 @@
 var assert = require("assert");
 var F = require("../src/fnc.js");
 
+suite("curry", function(){
+  test("doesn't do much with functions that take no args", function(){
+    var fn = F.curry(function(){ return "hello world"; });
+    assert.equal(fn(), "hello world");
+  });
+
+  test("automatically curries functions", function(){
+    var fn = F.curry(function(a, b, c){ return a + b + c; });
+    assert.equal(fn(1)(2)(3), 6);
+  });
+
+  test("curries functions with starting args", function(){
+    var fn = F.curry(function(a, b, c){ return a + b + c; }, 5);
+    assert.equal(fn(6, 7), 18);
+  });
+});
+
 suite("each", function(){
   test("iterates over all array elements", function(){
     var result = [];
