@@ -268,3 +268,17 @@ suite("cons", function(){
     assert.deepEqual(cons(1, [2,3,4]), [1,2,3,4]);
   });
 });
+
+suite("filter", function(){
+  test("filters based on predicate function", function(){
+    var isEven = function(e){ return e % 2 === 0; }
+    assert.deepEqual(filter(isEven, [1, 2, 3, 4, 5]), [2, 4]);
+  });
+});
+
+suite("remove", function(){
+  test("removes elements based on predicate function", function(){
+    var isEven = function(e){ return e % 2 === 0; }
+    assert.deepEqual(remove(isEven, [1, 2, 3, 4, 5]), [1, 3, 5]);
+  });
+});

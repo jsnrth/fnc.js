@@ -131,6 +131,20 @@ var cons = function(e, a){
   return flatten(conj([e], a));
 };
 
+var filter = function(fn, a){
+  return reduce(function(accum, e){
+    if(fn(e))
+      return conj(accum, e);
+    else
+      return accum;
+  }, [], a);
+};
+
+var remove = function(fn, a){
+  var nfn = function(){ return !apply(fn, slice(arguments)); };
+  return filter(nfn, a);
+};
+
 var functions = {
   apply: apply,
   curry: curry,
@@ -144,7 +158,9 @@ var functions = {
   last: last,
   flatten: flatten,
   conj: conj,
-  cons: cons
+  cons: cons,
+  filter: filter,
+  remove: remove
 };
 
 var extend = function(o){
