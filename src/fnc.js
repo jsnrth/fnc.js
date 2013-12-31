@@ -161,6 +161,13 @@ var every = function(fn, a){
   return true;
 };
 
+var find = function(fn, a){
+  for(var i = 0; i < a.length; i++)
+    if(fn(a[i]))
+      return a[i];
+  return null;
+};
+
 var functions = {
   apply: apply,
   curry: curry,
@@ -178,7 +185,8 @@ var functions = {
   filter: filter,
   remove: remove,
   some: some,
-  every: every
+  every: every,
+  find: find
 };
 
 var extend = function(o){

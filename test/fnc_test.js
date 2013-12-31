@@ -308,3 +308,15 @@ suite("every", function(){
     assert(!every(isTrue, []));
   });
 });
+
+suite("find", function(){
+  test("returns the first element that matches the predicate", function(){
+    var isB = function(e){ return (/b/).test(e); };
+    assert.equal(find(isB, ["a", "b1", "c", "b2"]), "b1");
+  });
+
+  test("null when element can't be found", function(){
+    var isFalse = function(){ return false; };
+    assert.strictEqual(find(isFalse, [1, 2, 3]), null);
+  });
+});
