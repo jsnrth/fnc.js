@@ -131,7 +131,7 @@ var cons = function(e, a){
   return flatten(conj([e], a));
 };
 
-module.exports = {
+var functions = {
   apply: apply,
   curry: curry,
   each: each,
@@ -146,3 +146,17 @@ module.exports = {
   conj: conj,
   cons: cons
 };
+
+var extend = function(o){
+  each(function(_, name){
+    if(typeof o[name] !== "undefined")
+      throw(new Error("Fnc: cannot pollute, " + name + " already defined"));
+  }, functions);
+
+  each(function(fn, name){
+    o[name] = fn;
+  }, functions);
+};
+
+module.exports.functions = functions;
+module.exports.extend = extend;
