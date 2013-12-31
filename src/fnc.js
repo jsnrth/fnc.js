@@ -70,9 +70,51 @@ var merge = function(o){
   }
 };
 
+var head = function(a){
+  if(isArray(a)) {
+    var h = a[0];
+    return typeof h === "undefined" ? null : h;
+  }
+  else {
+    return null;
+  }
+};
+
+var tail = function(a){
+  if(isArray(a)) {
+    return Array.prototype.slice.call(a, 1);
+  }
+  else {
+    return null;
+  }
+};
+
+var initial = function(a){
+  if(isArray(a)) {
+    return Array.prototype.slice.call(a, 0, a.length - 1);
+  }
+  else {
+    return null;
+  }
+};
+
+var last = function(a){
+  if(isArray(a)) {
+    var l = a[a.length - 1];
+    return typeof l === "undefined" ? null : l;
+  }
+  else {
+    return null;
+  }
+};
+
 module.exports = {
   each: each,
   map: map,
   reduce: reduce,
-  merge: merge
+  merge: merge,
+  head: head,
+  tail: tail,
+  initial: initial,
+  last: last
 };

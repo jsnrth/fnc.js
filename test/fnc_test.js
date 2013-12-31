@@ -129,3 +129,83 @@ suite("merge", function(){
     assert.deepEqual(F.merge(undefined, thing), {foo: "bar"});
   });
 });
+
+suite("head", function(){
+  test("returns the first element", function(){
+    assert.equal(F.head([2,4,6]), 2);
+  });
+
+  test("is null for an empty array", function(){
+    assert.strictEqual(F.head([]), null);
+  });
+
+  test("returns null for non-arrays", function(){
+    assert.strictEqual(F.head({foo: "bar"}), null);
+    assert.strictEqual(F.head("foobar"), null);
+    assert.strictEqual(F.head(12345), null);
+    assert.strictEqual(F.head(true), null);
+    assert.strictEqual(F.head(false), null);
+    assert.strictEqual(F.head(null), null);
+    assert.strictEqual(F.head(undefined), null);
+  });
+});
+
+suite("tail", function(){
+  test("returns the tail elements", function(){
+    assert.deepEqual(F.tail([2,4,6]), [4, 6]);
+  });
+
+  test("is empty array for an empty array", function(){
+    assert.deepEqual(F.tail([]), []);
+  });
+
+  test("returns null for non-arrays", function(){
+    assert.strictEqual(F.tail({foo: "bar"}), null);
+    assert.strictEqual(F.tail("foobar"), null);
+    assert.strictEqual(F.tail(12345), null);
+    assert.strictEqual(F.tail(true), null);
+    assert.strictEqual(F.tail(false), null);
+    assert.strictEqual(F.tail(null), null);
+    assert.strictEqual(F.tail(undefined), null);
+  });
+});
+
+suite("initial", function(){
+  test("returns all but the last element", function(){
+    assert.deepEqual(F.initial([2,4,6]), [2, 4]);
+  });
+
+  test("is an empty array for an empty array", function(){
+    assert.deepEqual(F.initial([]), []);
+  });
+
+  test("returns null for non-arrays", function(){
+    assert.strictEqual(F.initial({foo: "bar"}), null);
+    assert.strictEqual(F.initial("foobar"), null);
+    assert.strictEqual(F.initial(12345), null);
+    assert.strictEqual(F.initial(true), null);
+    assert.strictEqual(F.initial(false), null);
+    assert.strictEqual(F.initial(null), null);
+    assert.strictEqual(F.initial(undefined), null);
+  });
+});
+
+suite("last", function(){
+  test("returns the last element", function(){
+    assert.equal(F.last([2,4,6]), 6);
+  });
+
+  test("is null for an empty array", function(){
+    assert.deepEqual(F.last([]), null);
+  });
+
+  test("returns null for non-arrays", function(){
+    assert.strictEqual(F.last({foo: "bar"}), null);
+    assert.strictEqual(F.last("foobar"), null);
+    assert.strictEqual(F.last(12345), null);
+    assert.strictEqual(F.last(true), null);
+    assert.strictEqual(F.last(false), null);
+    assert.strictEqual(F.last(null), null);
+    assert.strictEqual(F.last(undefined), null);
+  });
+});
