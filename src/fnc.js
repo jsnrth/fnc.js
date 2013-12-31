@@ -4,6 +4,20 @@ var isObject = function(o){
   return o && !isArray(o) && typeof o === "object";
 };
 
+var clone = function(o){
+  if(isArray(o)){
+    return Array.prototype.slice.call(o);
+  }
+  else if(isObject(o)){
+    var c = {};
+    each(function(v, k){ c[k] = v; }, o);
+    return c;
+  }
+  else {
+    return o;
+  }
+}
+
 var each = function(f, o){
   if(isArray(o)){
     o.forEach(f);
@@ -31,7 +45,7 @@ var map = function(f, o){
 };
 
 var reduce = function(fn, init, o){
-  var accum = init;
+  var accum = clone(init);
   each(function(v, k){
     accum = fn(accum, v, k);
   }, o);

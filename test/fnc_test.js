@@ -70,13 +70,25 @@ suite("map", function(){
 
 suite("reduce", function(){
   test("reduces over an array", function(){
+    var init = 0;
     var fn = function(accum, n){ return accum + n; };
-    assert.equal(F.reduce(fn, 0, [1, 2, 3, 4, 5]), 15);
+    assert.equal(init, 0);
+    assert.equal(F.reduce(fn, init, [1, 2, 3, 4, 5]), 15);
   });
 
   test("reduces over an object values", function(){
-    var fn = function(accum, v, k){ return accum.concat([[k, v]]); };
-    assert.deepEqual([["one", 1], ["two", 2], ["three", 3]],
-                 F.reduce(fn, [], {one: 1, two: 2, three: 3}));
+    var init = [];
+    var fn = function(accum, v, k){ accum.push([k, v]); return accum; };
+    var result = F.reduce(fn, init, {one: 1, two: 2, three: 3});
+    assert.deepEqual([], init);
+    assert.deepEqual([["one", 1], ["two", 2], ["three", 3]], result);
+  });
+
+  test("reduces into an object", function(){
+    var init = {};
+    var fn = function(accum, v, k){ accum[k + "x2"] = v * 2; return accum; };
+    var result = F.reduce(fn, init, {one: 1, two: 2, three: 3})
+    assert.deepEqual(init, {});
+    assert.deepEqual({onex2: 2, twox2: 4, threex2: 6}, result);
   });
 });
