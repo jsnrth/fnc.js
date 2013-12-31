@@ -112,6 +112,15 @@ var last = withArrayOrNull(function(a){
   return typeof l === "undefined" ? null : l;
 });
 
+var flatten = withArrayOrNull(function(a){
+  return reduce(function(accum, e){
+    if(isArray(e))
+      return accum.concat(flatten(e));
+    else
+      return accum.concat(e);
+  }, [], a);
+});
+
 var conj = withArrayOrNull(function(a){
   var things = slice(arguments, 1);
   return a.concat(things);
@@ -119,7 +128,7 @@ var conj = withArrayOrNull(function(a){
 
 var cons = function(e, a){
   if(!isArray(a)) return null;
-  return ([e]).concat(a);
+  return flatten(conj([e], a));
 };
 
 module.exports = {
@@ -133,6 +142,7 @@ module.exports = {
   tail: tail,
   initial: initial,
   last: last,
+  flatten: flatten,
   conj: conj,
   cons: cons
 };

@@ -234,6 +234,12 @@ suite("last", function(){
   });
 });
 
+suite("flatten", function(){
+  test("flattens nested arrays", function(){
+    assert.deepEqual(F.flatten([1, [2, [3, [4]]]]), [1, 2, 3, 4]);
+  });
+});
+
 suite("conj", function(){
   test("appends elements to an array", function(){
     assert.deepEqual(F.conj([1,2,3], 4, 5, 6), [1,2,3,4,5,6]);
