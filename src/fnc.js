@@ -1,3 +1,7 @@
+var slice = function(a){
+  return Array.prototype.slice.apply(a, Array.prototype.slice.call(arguments, 1));
+};
+
 var isArray = Array.isArray;
 
 var isObject = function(o){
@@ -6,7 +10,7 @@ var isObject = function(o){
 
 var clone = function(o){
   if(isArray(o)){
-    return Array.prototype.slice.call(o);
+    return slice(o);
   }
   else if(isObject(o)){
     var c = {};
@@ -55,7 +59,7 @@ var reduce = function(fn, init, o){
 var merge = function(o){
   if(o === null || o === undefined) o = {};
   if(isObject(o)){
-    var merges = Array.prototype.slice.call(arguments, 1);
+    var merges = slice(arguments, 1);
     return reduce(function(accum, m){
       if(isObject(m)){
         each(function(v, k){
@@ -82,7 +86,7 @@ var head = function(a){
 
 var tail = function(a){
   if(isArray(a)) {
-    return Array.prototype.slice.call(a, 1);
+    return slice(a, 1);
   }
   else {
     return null;
@@ -91,7 +95,7 @@ var tail = function(a){
 
 var initial = function(a){
   if(isArray(a)) {
-    return Array.prototype.slice.call(a, 0, a.length - 1);
+    return slice(a, 0, a.length - 1);
   }
   else {
     return null;
