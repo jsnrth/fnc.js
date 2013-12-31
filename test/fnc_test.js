@@ -1,6 +1,13 @@
 var assert = require("assert");
 var F = require("../src/fnc.js");
 
+suite("apply", function(){
+  test("applies argument arrays to a function", function(){
+    var fn = function(a, b, c){ return a + b + c; };
+    assert.equal(F.apply(fn, [1, 2, 3]), 6);
+  });
+});
+
 suite("curry", function(){
   test("doesn't do much with functions that take no args", function(){
     var fn = F.curry(function(){ return "hello world"; });

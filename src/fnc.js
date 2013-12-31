@@ -22,16 +22,20 @@ var clone = function(o){
   }
 };
 
+var apply = function(f, args){
+  return f.apply(null, args);
+};
+
 var curry = function(f){
   var initial = slice(arguments, 1);
   return function(){
     var args = initial.concat(slice(arguments));
     if(args.length < f.length){
       args.unshift(f);
-      return curry.apply(null, args);
+      return apply(curry, args);
     }
     else {
-      return f.apply(null, args)
+      return apply(f, args);
     }
   }
 };
@@ -48,7 +52,7 @@ var each = curry(function(f, o){
     o.forEach(f);
   }
   else if(isArray(o) || isObject(o)){
-    var fn = function(k){ f.apply(null, [o[k], k]); };
+    var fn = function(k){ apply(f, [o[k], k]); };
     return each(fn, Object.keys(o));
   }
 });
@@ -109,6 +113,7 @@ var last = withArrayOrNull(function(a){
 });
 
 module.exports = {
+  apply: apply,
   curry: curry,
   each: each,
   map: map,
