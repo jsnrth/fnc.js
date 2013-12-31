@@ -45,8 +45,24 @@ var map = function(f, o){
   }
 };
 
+var reduce = function(fn, init, o){
+  var accum = init;
+  if(isObject(o)){
+    eachPair(function(k, v){
+      accum = fn(accum, v, k);
+    }, o);
+  }
+  else {
+    each(function(v){
+      accum = fn(accum, v);
+    }, o);
+  }
+  return accum;
+};
+
 module.exports = {
   each: each,
   eachPair: eachPair,
-	map: map
+  map: map,
+  reduce: reduce
 };

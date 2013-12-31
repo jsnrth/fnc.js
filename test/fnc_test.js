@@ -86,3 +86,16 @@ suite("map", function(){
     assert(F.map(fn, undefined) === null);
   });
 });
+
+suite("reduce", function(){
+  test("reduces over an array", function(){
+    var fn = function(accum, n){ return accum + n; };
+    assert.equal(F.reduce(fn, 0, [1, 2, 3, 4, 5]), 15);
+  });
+
+  test("reduces over an object values", function(){
+    var fn = function(accum, v, k){ return accum.concat([[k, v]]); };
+    assert.deepEqual([["one", 1], ["two", 2], ["three", 3]],
+                 F.reduce(fn, [], {one: 1, two: 2, three: 3}));
+  });
+});
