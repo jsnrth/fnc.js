@@ -271,14 +271,40 @@ suite("cons", function(){
 
 suite("filter", function(){
   test("filters based on predicate function", function(){
-    var isEven = function(e){ return e % 2 === 0; }
+    var isEven = function(e){ return e % 2 === 0; };
     assert.deepEqual(filter(isEven, [1, 2, 3, 4, 5]), [2, 4]);
   });
 });
 
 suite("remove", function(){
   test("removes elements based on predicate function", function(){
-    var isEven = function(e){ return e % 2 === 0; }
+    var isEven = function(e){ return e % 2 === 0; };
     assert.deepEqual(remove(isEven, [1, 2, 3, 4, 5]), [1, 3, 5]);
+  });
+});
+
+suite("some", function(){
+  test("true when at least one element succeeds predicate", function(){
+    var isEven = function(e){ return e % 2 === 0; };
+    assert( some(isEven, [1, 2]));
+    assert(!some(isEven, [1, 3, 5]));
+  });
+
+  test("fails for empty arrays", function(){
+    var isTrue = function(){ return true; };
+    assert(!some(isTrue, []));
+  });
+});
+
+suite("every", function(){
+  test("true when all elements succeed predicate", function(){
+    var isEven = function(e){ return e % 2 === 0; };
+    assert( every(isEven, [2, 4, 6]));
+    assert(!every(isEven, [1, 2, 3]));
+  });
+
+  test("fails for empty arrays", function(){
+    var isTrue = function(){ return true; };
+    assert(!every(isTrue, []));
   });
 });

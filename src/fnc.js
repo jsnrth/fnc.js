@@ -145,6 +145,22 @@ var remove = function(fn, a){
   return filter(nfn, a);
 };
 
+var some = function(fn, a){
+  if(a.length == 0) return false;
+  for(var i = 0; i < a.length; i++)
+    if(fn(a[i]))
+      return true;
+  return false;
+};
+
+var every = function(fn, a){
+  if(a.length == 0) return false;
+  for(var i = 0; i < a.length; i++)
+    if(!fn(a[i]))
+      return false;
+  return true;
+};
+
 var functions = {
   apply: apply,
   curry: curry,
@@ -160,7 +176,9 @@ var functions = {
   conj: conj,
   cons: cons,
   filter: filter,
-  remove: remove
+  remove: remove,
+  some: some,
+  every: every
 };
 
 var extend = function(o){
