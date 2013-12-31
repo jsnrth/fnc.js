@@ -233,3 +233,15 @@ suite("last", function(){
     assert.strictEqual(F.last(undefined), null);
   });
 });
+
+suite("conj", function(){
+  test("appends elements to an array", function(){
+    assert.deepEqual(F.conj([1,2,3], 4, 5, 6), [1,2,3,4,5,6]);
+  });
+});
+
+suite("cons", function(){
+  test("preappends elements to an array", function(){
+    assert.deepEqual(F.cons(1, [2,3,4]), [1,2,3,4]);
+  });
+});

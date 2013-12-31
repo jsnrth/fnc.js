@@ -42,7 +42,7 @@ var curry = function(f){
 
 var withArrayOrNull = curry(function(f, a){
   if(isArray(a))
-    return f(a);
+    return apply(f, slice(arguments, 1));
   else
     return null;
 });
@@ -112,6 +112,16 @@ var last = withArrayOrNull(function(a){
   return typeof l === "undefined" ? null : l;
 });
 
+var conj = withArrayOrNull(function(a){
+  var things = slice(arguments, 1);
+  return a.concat(things);
+});
+
+var cons = function(e, a){
+  if(!isArray(a)) return null;
+  return ([e]).concat(a);
+};
+
 module.exports = {
   apply: apply,
   curry: curry,
@@ -122,5 +132,7 @@ module.exports = {
   head: head,
   tail: tail,
   initial: initial,
-  last: last
+  last: last,
+  conj: conj,
+  cons: cons
 };
