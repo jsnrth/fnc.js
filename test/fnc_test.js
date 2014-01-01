@@ -320,3 +320,30 @@ suite("find", function(){
     assert.strictEqual(find(isFalse, [1, 2, 3]), null);
   });
 });
+
+suite("compose", function(){
+  test("threads something through several functions", function(){
+    var plus3 = function(n){ return n + 3; };
+    var times2 = function(n){ return n * 2; };
+    var minus1 = function(n){ return n - 1; };
+    var fn = compose(plus3, times2, minus1);
+    assert.equal(fn(3), 11);
+  });
+
+  test("threads other data too", function(){
+    var removeBar = function(o){ delete o["bar"]; return o; };
+    var addBat = function(o){ o["bat"] = "789"; return o; };
+    var fn = compose(removeBar, addBat);
+    assert.deepEqual(fn({foo: "123", bar: "456"}), {foo: "123", bat: "789"});
+  });
+
+  test("threads arrays as arguments", function(){
+    var changeA = function(a, b, c){ return [a + 2, b, c]; };
+    var changeB = function(a, b, c){ return [a, b - 4, c]; };
+    var changeC = function(a, b, c){ return [a, b, c * 3]; };
+    var fn1 = compose(changeA, changeB, changeC);
+    var fn2 = compose(fn1, function(a, b, c){ return a + b + c; });
+    assert.deepEqual(fn1(1, 2, 3), [3, -2, 9]);
+    assert.deepEqual(fn2(1, 2, 3), 10);
+  });
+});

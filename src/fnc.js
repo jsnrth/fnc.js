@@ -185,6 +185,19 @@ var find = function(fn, a){
   return null;
 };
 
+var compose = function(){
+  var fns = slice(arguments);
+  return function(){
+    var args = slice(arguments);
+    return reduce(function(accum, fn){
+      if(isArray(accum))
+        return apply(fn, accum);
+      else
+        return apply(fn, [accum]);
+    }, args, fns);
+  };
+};
+
 var functions = {
   apply: apply,
   curry: curry,
@@ -203,7 +216,8 @@ var functions = {
   remove: remove,
   some: some,
   every: every,
-  find: find
+  find: find,
+  compose: compose
 };
 
 var extend = function(o){
