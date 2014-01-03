@@ -70,8 +70,9 @@ var each = curry(function(f, o){
   }
   else if(isArray(o) || isObject(o)){
     var fn = function(k){ apply(f, [o[k], k]); };
-    return each(fn, Object.keys(o));
+    each(fn, Object.keys(o));
   }
+  return o;
 });
 
 var map = curry(function(f, o){
