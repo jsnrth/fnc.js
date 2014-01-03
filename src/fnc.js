@@ -100,7 +100,10 @@ var merge = function(o){
     return reduce(function(accum, m){
       if(isObject(m)){
         each(function(v, k){
-          accum[k] = v;
+          if(isObject(v) && isObject(accum[k]))
+            accum[k] = merge(accum[k], v);
+          else
+            accum[k] = v;
         }, m);
       }
       return accum;

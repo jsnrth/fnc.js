@@ -169,6 +169,20 @@ suite("merge", function(){
     assert.deepEqual(merge(null, thing), {foo: "bar"});
     assert.deepEqual(merge(undefined, thing), {foo: "bar"});
   });
+
+  test("does deep merging", function(){
+    var init = {one: {two: {three: 3}}};
+    var expected = {one: {two: {three: 3, baz: "bat"}, foo: "bar"}};
+    assert.deepEqual(merge(init, {one: {foo: "bar", two: {baz: "bat"}}}), expected);
+  });
+
+  test("deep merges several objects", function(){
+    var init = {one: {two: {three: 3}}};
+    var expected = {one: {two: {three: 3, baz: "bat"}, foo: "bar"}};
+    var merge1 = {one: {foo: "bar"}};
+    var merge2 = {one: {two: {baz: "bat"}}};
+    assert.deepEqual(merge(init, merge1, merge2), expected);
+  });
 });
 
 suite("head", function(){
