@@ -347,3 +347,33 @@ suite("compose", function(){
     assert.deepEqual(fn2(1, 2, 3), 10);
   });
 });
+
+suite("assoc", function(){
+  test("adds a key/value to a hash", function(){
+    assert.deepEqual(assoc({}, "foo", "bar"), {foo: "bar"});
+  });
+
+  test("changes a key/value in a hash without modifying the original", function(){
+    var h = {foo: "bar"};
+    var h2 = assoc(h, "foo", "baz");
+    assert.deepEqual(h2, {foo: "baz"});
+    assert.deepEqual(h, {foo: "bar"});
+  });
+});
+
+suite("assocIn", function(){
+  test("adds nested keys/values to a hash", function(){
+    assert.deepEqual(assocIn({}, ["one", "two"], 222), {one: {two: 222}});
+  });
+
+  test("modifies nested keys/values in a hash without modifying the original", function(){
+    var h = {one: {two: {three: "1+2"}}};
+    var h2 = assocIn({}, ["one", "two", "three"], "2+1");
+    assert.deepEqual(h,  {one: {two: {three: "1+2"}}});
+    assert.deepEqual(h2, {one: {two: {three: "2+1"}}});
+  });
+
+  test("creates nested hash", function(){
+    assert.deepEqual(assocIn({}, ["one", "two", "three"], 3), {one: {two: {three: 3}}});
+  });
+});

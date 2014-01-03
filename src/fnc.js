@@ -198,6 +198,23 @@ var compose = function(){
   };
 };
 
+var assoc = function(orig, k, v){
+  var o = clone(orig);
+  o[k] = v;
+  return o;
+};
+
+var assocIn = function(orig, ks, v){
+  var o = clone(orig);
+  var c = o;
+  each(function(k){
+    if(!c[k]) c[k] = {};
+    c = c[k];
+  }, initial(ks));
+  c[last(ks)] = v;
+  return o;
+};
+
 var functions = {
   apply: apply,
   curry: curry,
@@ -217,7 +234,9 @@ var functions = {
   some: some,
   every: every,
   find: find,
-  compose: compose
+  compose: compose,
+  assoc: assoc,
+  assocIn: assocIn
 };
 
 var extend = function(o){
