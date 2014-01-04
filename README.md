@@ -9,7 +9,7 @@ It Wrong](https://www.youtube.com/watch?v=m3svKOdZijA).
 
 ```
 $ npm install
-$ make test
+$ grunt test
 ```
 
 Running individual tests

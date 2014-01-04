@@ -3,15 +3,14 @@
   "version": "1.0.0",
   "description": "Playing around with some functional stuff in js.",
   "main": "fnc.js",
-  "scripts": {
-    "test": "make test"
-  },
   "keywords": [
     "Functional"
   ],
   "author": "Jason Roth",
   "license": "WTFPL",
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "grunt": "*",
+    "grunt-mocha-test": "*"
   }
 }
